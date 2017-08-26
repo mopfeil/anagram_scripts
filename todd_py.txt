@@ -1,0 +1,66 @@
+
+import ui
+import random
+import todd_list
+
+
+def init(liste,bild):
+    
+    i=0
+    j=0
+    for word in liste:
+        if len(word)==1:
+            try:
+                bild[str(i)].title = word
+                i=i+1
+            except:
+                break
+        else:        
+            try:
+              if  j> 19:
+                break
+              bild[str(j)].title = word
+              j=j+1
+            except:
+              break
+    
+def check(liste, wort, thing):
+    
+    j = next((i for i, sublist in enumerate(liste) if wort in sublist), -1)
+    
+    if len(thing) == 1:
+        if thing =="4":
+            if len(liste[j][0])==4:
+                return True
+            else:
+                return False
+        elif thing in liste[j][0]:
+            return True
+        else:
+            return False
+    else:
+        if thing in liste[j]:
+            return True    
+        else:
+            return False
+        
+def button_tapped(sender):
+    '@type sender: ui.Button'
+    
+    v = sender.superview
+    t = sender.title
+    sender.background_color='lightblue'
+    if t=="Reveal":
+    	  v['out'].text = wahl
+    elif check(todd_list.data,wahl,t):
+    		v['out'].text = "Yes"
+    else:
+    		v['out'].text = "No"
+    
+    
+v = ui.load_view('todd')
+v.present()
+
+init(todd_list.tags, v)
+n=random.randint(0,len(todd_list.data))
+wahl=todd_list.data[n][0]
